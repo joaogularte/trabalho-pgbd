@@ -19,15 +19,29 @@ class UserService {
         const id = uuid();
         const user = {
             userId: id,
-            name: data.name,
+            nome: data.name,
             email: data.email
         }
         return await UserModel.post(user);
     }
 
-    
-    
+    static async put(id, data){
+        const user = await UserModel.put(id, data);
+        if(user.Attributes){
+            return user.Attributes
+        }else{
+            return false
+        }
+    }
 
+    static async delete(id){
+        const user = await UserModel.delete(id);
+        if(user.ConditionalCheckFailedException){
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 }
 
@@ -36,7 +50,7 @@ const data = {
     email: 'ijaiojdaiojda'
 }
 
-UserService.get('56dac56d-a4ef-4b1a-be2f-14d762be33a3')
+UserService.delete('56dac56d-a4ef-4b1a-be2f-')
     .then(data => console.log(data))
     .catch(e => console.log(e));
 
